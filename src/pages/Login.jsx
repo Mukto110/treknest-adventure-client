@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../provider/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const handleLoginIn = (event) => {
+  const { signIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLoginIn = async (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    const user = { email, password };
-    console.log(user);
+
+    try {
+      const result = await signIn(email, password);
+      console.log(result);
+      alert("signIn successfully");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
