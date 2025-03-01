@@ -5,15 +5,11 @@ const Navbar = () => {
   return (
     <div className="w-full bg-base-100 shadow-sm">
       {" "}
-      {/* Full-width background */}
       <div className="container mx-auto flex items-center justify-between py-4">
         {" "}
-        {/* Centered Content */}
-        {/* Logo / Website Name */}
         <Link to="/" className="text-xl font-bold">
           TrekNest
         </Link>
-        {/* Navigation Links */}
         <nav className="flex gap-6">
           <Link to="/" className="hover:text-primary">
             Home
@@ -28,7 +24,6 @@ const Navbar = () => {
             My List
           </Link>
         </nav>
-        {/* Auth Buttons (Conditionally Rendered) */}
         <div className="flex items-center gap-4">
           <Link to="/login" className="btn btn-outline btn-primary">
             Login
