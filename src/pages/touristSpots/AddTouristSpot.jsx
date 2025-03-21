@@ -14,6 +14,7 @@ const AddTouristSpot = () => {
   });
 
   const [message, setMessage] = useState({ text: "", type: "" });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,6 +22,7 @@ const AddTouristSpot = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await fetch("http://localhost:5000/api/tourist-spots", {
@@ -35,6 +37,8 @@ const AddTouristSpot = () => {
           text: "✅ Tourist spot added successfully!",
           type: "success",
         });
+
+        // Reset form
         setFormData({
           image: "",
           tourists_spot_name: "",
@@ -51,29 +55,31 @@ const AddTouristSpot = () => {
       }
     } catch (error) {
       setMessage({ text: error.message, type: "error" });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg">
-        <h2 className="text-2xl font-semibold text-gray-700 text-center mb-6">
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-green-100">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg border border-gray-200">
+        <h2 className="text-3xl font-semibold text-gray-700 text-center mb-6">
           Add a New Tourist Spot
         </h2>
 
         {message.text && (
           <div
-            className={`mb-4 p-4 rounded-md ${
+            className={`mb-4 p-4 rounded-md text-center font-medium ${
               message.type === "success"
-                ? "bg-green-100 text-green-700"
-                : "bg-red-100 text-red-700"
+                ? "bg-green-100 text-green-700 border border-green-400"
+                : "bg-red-100 text-red-700 border border-red-400"
             }`}
           >
             {message.text}
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-4">
           {[
             {
               label: "Image URL",
@@ -100,7 +106,7 @@ const AddTouristSpot = () => {
               placeholder: "Enter description",
             },
             {
-              label: "Average Cost",
+              label: "Average Cost (USD)",
               name: "average_cost",
               type: "number",
               placeholder: "Enter cost in USD",
@@ -124,8 +130,8 @@ const AddTouristSpot = () => {
               placeholder: "e.g. 10000",
             },
           ].map(({ label, name, type, placeholder }) => (
-            <div className="mb-4" key={name}>
-              <label className="block text-sm font-medium text-gray-600">
+            <div key={name} className="flex flex-col">
+              <label className="text-sm font-semibold text-gray-600">
                 {label}
               </label>
               <input
@@ -133,15 +139,23 @@ const AddTouristSpot = () => {
                 name={name}
                 value={formData[name]}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                className="w-full px-4 py-3 mt-1 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-700 text-sm"
                 placeholder={placeholder}
                 required
               />
             </div>
           ))}
 
-          <button className="w-full py-3 text-white bg-primary rounded-md hover:bg-primary-dark transition text-sm font-medium">
-            Add Spot
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-3 text-white font-medium rounded-md transition ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            {loading ? "Adding..." : "Add Tourist Spot"}
           </button>
         </form>
       </div>

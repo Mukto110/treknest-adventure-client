@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import AddTouristSpot from "../pages/touristSpots/AddTouristSpot";
 import AllTouristSpots from "../pages/touristSpots/AllTouristSpots";
+import TouristSpotDetails from "../pages/touristSpots/TouristSpotDetails";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/tourist-spots",
         element: <AllTouristSpots />,
+      },
+      {
+        path: "/tourist-spots/:id",
+        element: <TouristSpotDetails />,
       },
     ],
   },

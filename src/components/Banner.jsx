@@ -7,7 +7,6 @@ const images = [image1, image2];
 const Banner = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Auto-slide every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % images.length);
@@ -29,21 +28,22 @@ const Banner = () => {
             <img src={img} className="w-full h-full object-cover" alt="Slide" />
             <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white text-center p-4">
               <h1 className="text-4xl md:text-5xl font-bold">
-                {index === 0 ? "Explore The World" : "Adventure Awaits"}
+                {index === 0
+                  ? "Discover the Beauty of Bangladesh"
+                  : "Adventure Awaits in Bangladesh"}
               </h1>
               <p className="mt-2 text-lg md:text-xl max-w-xl">
                 {index === 0
-                  ? "Discover breathtaking destinations and unforgettable experiences."
-                  : "Experience the thrill of nature and culture like never before."}
+                  ? "From the serene Sundarbans to the rolling hills of Bandarban, explore the hidden gems of Bangladesh."
+                  : "Experience the vibrant culture, breathtaking landscapes, and warm hospitality of Bangladesh."}
               </p>
-              <button className="mt-4 px-6 py-3 bg-primary hover:bg-primary-dark transition rounded-lg text-white font-medium">
-                {index === 0 ? "Get Started" : "Discover More"}
+              <button className="mt-4 px-6 py-3 bg-green-600 hover:bg-green-700 transition rounded-lg text-white font-medium">
+                {index === 0 ? "Start Exploring" : "Plan Your Trip"}
               </button>
             </div>
           </div>
         ))}
 
-        {/* Manual Navigation */}
         <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
           <button
             onClick={() =>

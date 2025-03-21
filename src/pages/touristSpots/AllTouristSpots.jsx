@@ -22,40 +22,61 @@ const AllTouristSpots = () => {
     fetchTouristSpots();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-primary"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-red-500 text-lg">{error}</p>
+      </div>
+    );
+  }
+
   return (
-    <section className="min-h-screen bg-gray-50 p-6">
-      <h2 className="text-3xl font-bold text-gray-700 text-center mb-6">
+    <section className="min-h-screen bg-gray-50 py-10 px-6">
+      <h2 className="text-3xl font-bold text-gray-700 text-center mb-8">
         All Tourist Spots
       </h2>
 
-      {loading && <p className="text-center text-gray-600">Loading...</p>}
-      {error && <p className="text-center text-red-500">{error}</p>}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {touristSpots.map((spot) => (
           <div
             key={spot._id}
-            className="bg-white shadow-md rounded-lg overflow-hidden"
+            className="bg-white shadow-lg rounded-lg overflow-hidden transition transform hover:scale-105 hover:shadow-xl"
           >
             <img
               src={spot.image}
               alt={spot.tourists_spot_name}
-              className="w-full h-48 object-cover"
+              className="w-full h-56 object-cover"
             />
-            <div className="p-4">
-              <h3 className="text-xl font-semibold text-gray-700">
+            <div className="p-5">
+              <h3 className="text-xl font-semibold text-gray-800">
                 {spot.tourists_spot_name}
               </h3>
-              <p className="text-gray-600">{spot.location}</p>
-              <p className="text-gray-500 text-sm">{spot.short_description}</p>
-              <p className="text-gray-700 font-bold mt-2">
-                Cost: ${spot.average_cost}
+              <p className="text-gray-500">{spot.location}</p>
+              <p className="text-gray-600 text-sm mt-2">
+                {spot.short_description}
               </p>
-              <p className="text-gray-600">Season: {spot.seasonality}</p>
-              <p className="text-gray-600">Travel Time: {spot.travel_time}</p>
-              <p className="text-gray-600">
-                Visitors/Year: {spot.totalVisitorsPerYear}
-              </p>
+              <div className="mt-4">
+                <p className="text-gray-700 font-bold">
+                  💰 Cost: ${spot.average_cost}
+                </p>
+                <p className="text-gray-600">
+                  ❄️ Best Season: {spot.seasonality}
+                </p>
+                <p className="text-gray-600">
+                  ⏳ Travel Time: {spot.travel_time}
+                </p>
+                <p className="text-gray-600">
+                  👥 Visitors: {spot.totalVisitorsPerYear}
+                </p>
+              </div>
             </div>
           </div>
         ))}
